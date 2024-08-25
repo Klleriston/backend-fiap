@@ -5,8 +5,6 @@ import com.fiap.backend.models.User;
 import com.fiap.backend.repositories.UserRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -23,23 +21,29 @@ public class UserService {
     private PasswordEncoder passwordEncoder;
 
     @Transactional
-    public User createUser(String nome, String email, String password) {
+    public User createUser(String nome, String email, String password, String fcmToken) {
         String encodedPasswordString = passwordEncoder.encode(password);
-        User user = new User(nome, email, encodedPasswordString);
+        User user = new User(nome, email, encodedPasswordString, fcmToken);
         User savedUser = userRepository.save(user);
         healthProfileService.createHealthProfile(0.0, 0.0, "Inactive", false, savedUser.getId());
 
         return savedUser;
     }
 
-    public User updatedUser(UUID id, String name, String email, String password) {
+    @Transactional
+    public User updateUser(UUID id, String name, String email, String password, String fcmToken) {
         User existingUser = userRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("User not found \n" + id));
 
-        User updatedUser = new User(existingUser.getId(), name, email, password);
 
-        return userRepository.save(updatedUser);
+        existingUser.setName(name);
+        existingUser.setEmail(email);
+        existingUser.setPassword(passwordEncoder.encode(password));
+        existingUser.setFcmToken(fcmToken);
+
+        return userRepository.save(existingUser);
     }
+
 
     public User getUserById(UUID id) {
         return userRepository.findById(id)

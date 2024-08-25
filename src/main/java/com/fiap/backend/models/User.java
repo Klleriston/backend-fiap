@@ -25,15 +25,19 @@ public class User {
     @Column(nullable = false)
     private String password;
 
-    public User(UUID id, String name, String email, String password) {
+    @Column(nullable = true)
+    private String fcmToken;
+
+    public User(UUID id, String name, String email, String password, String fcmToken) {
         this.id = id;
         this.name = name;
         this.email = email;
         this.password = password;
+        this.fcmToken = fcmToken;
     }
 
-    public User(String name, String email, String password) {
-        this(UUID.randomUUID(), name, email, password);
+    public User(String name, String email, String password, String fcmToken) {
+        this(UUID.randomUUID(), name, email, password, fcmToken);
     }
 
     protected User() {

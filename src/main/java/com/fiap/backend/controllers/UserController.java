@@ -21,7 +21,7 @@ public class UserController {
 
     @PostMapping("/register")
     public ResponseEntity<User> registerUser(@RequestBody User user) {
-        User newUser = userService.createUser(user.getName(), user.getEmail(), user.getPassword());
+        User newUser = userService.createUser(user.getName(), user.getEmail(), user.getPassword(), user.getFcmToken());
         return new ResponseEntity<>(newUser, HttpStatus.CREATED);
     }
 
@@ -34,7 +34,7 @@ public class UserController {
 
     @PutMapping("/{id}")
     public ResponseEntity<User> updateUser(@PathVariable UUID id, @RequestBody User user) {
-        User updatedUser = userService.updatedUser(id, user.getName(), user.getEmail(), user.getPassword());
+        User updatedUser = userService.updateUser(id, user.getName(), user.getEmail(), user.getPassword(), user.getFcmToken());
         return new ResponseEntity<>(updatedUser, HttpStatus.OK);
     }
 
