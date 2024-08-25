@@ -2,28 +2,31 @@ package com.fiap.backend.models;
 
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.Setter;
 
 import java.util.Date;
 import java.util.UUID;
 
 @Entity
-@Table(name= "health_tracking")
+@Table(name = "health_tracking")
+@Getter
+@Setter
 public class HealthTracking {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private final UUID id;
+    private UUID id;
 
     @Column(nullable = false)
     @Temporal(TemporalType.DATE)
-    private final Date date;
+    private Date date;
 
     @Column(nullable = false)
-    private final double weight;
+    private double weight;
 
     @Column(nullable = false)
-    private final double waterIntake;
+    private double waterIntake;
 
-    @Getter
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
@@ -37,8 +40,8 @@ public class HealthTracking {
     }
 
     public HealthTracking() {
-        this.id = null;
-        this.date = null;
+        this.id = UUID.randomUUID();
+        this.date = new Date();
         this.weight = 0.0;
         this.waterIntake = 0.0;
         this.user = null;

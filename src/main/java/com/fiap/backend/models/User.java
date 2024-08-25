@@ -23,11 +23,15 @@ public class User {
     @Column(nullable = false)
     private final String password;
 
-    public User(String name, String email, String password) {
-        this.id = UUID.randomUUID();
+    public User(UUID id, String name, String email, String password) {
+        this.id = id;
         this.name = name;
         this.email = email;
         this.password = password;
+    }
+
+    public User(String name, String email, String password) {
+        this(UUID.randomUUID(), name, email, password);
     }
 
     protected User() {
@@ -36,5 +40,4 @@ public class User {
         this.email = null;
         this.password = null;
     }
-
 }

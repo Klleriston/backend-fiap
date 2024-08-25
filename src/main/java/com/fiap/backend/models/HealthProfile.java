@@ -1,31 +1,34 @@
 package com.fiap.backend.models;
 
+import com.fiap.backend.models.User;
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.Setter;
 
 import java.util.UUID;
 
 @Entity
 @Table(name = "health_profiles")
+@Getter
+@Setter
 public class HealthProfile {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private final UUID id;
+    private UUID id;
 
     @Column(nullable = false)
-    private final double weight;
+    private double weight;
 
     @Column(nullable = false)
-    private final double height;
+    private double height;
 
     @Column(nullable = false)
-    private final String activityLevel;
+    private String activityLevel;
 
     @Column(nullable = false)
-    private final boolean mobilityIssues;
+    private boolean mobilityIssues;
 
-    @Getter
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
@@ -40,10 +43,10 @@ public class HealthProfile {
     }
 
     public HealthProfile() {
-        this.id = null;
-        this.weight = 0;
-        this.height = 0;
-        this.activityLevel = null;
+        this.id = UUID.randomUUID();
+        this.weight = 0.0;
+        this.height = 0.0;
+        this.activityLevel = "Inactive";
         this.mobilityIssues = false;
         this.user = null;
     }
