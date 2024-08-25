@@ -2,26 +2,28 @@ package com.fiap.backend.models;
 
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.Setter;
 
 import java.util.UUID;
 
-@Getter
 @Entity
 @Table(name = "users")
+@Getter
+@Setter
 public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private final UUID id;
+    private UUID id;
 
     @Column(nullable = false)
-    private final String name;
+    private String name;
 
     @Column(nullable = false, unique = true)
-    private final String email;
+    private String email;
 
     @Column(nullable = false)
-    private final String password;
+    private String password;
 
     public User(UUID id, String name, String email, String password) {
         this.id = id;
@@ -35,9 +37,5 @@ public class User {
     }
 
     protected User() {
-        this.id = null;
-        this.name = null;
-        this.email = null;
-        this.password = null;
     }
 }

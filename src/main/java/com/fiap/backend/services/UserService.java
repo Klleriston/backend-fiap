@@ -3,6 +3,7 @@ package com.fiap.backend.services;
 import com.fiap.backend.exceptions.ResourceNotFoundException;
 import com.fiap.backend.models.User;
 import com.fiap.backend.repositories.UserRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,10 +17,13 @@ public class UserService {
     @Autowired
     private HealthProfileService healthProfileService;
 
+    @Transactional
     public User createUser(String nome, String email, String password) {
         User user = new User(nome, email, password);
-        healthProfileService.createHealthProfile(0.0, 0.0, "Inactive", false, user.getId());
-        return userRepository.save(user);
+        User savedUser = userRepository.save(user);
+        healthProfileService.createHealthProfile(0.0, 0.0, "Inactive", false, savedUser.getId());
+
+        return savedUser;
     }
 
     public User updatedUser(UUID id, String name, String email, String password) {
