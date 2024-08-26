@@ -1,22 +1,10 @@
 version: '3.8'
 services:
-  postgres:
-    image: postgres:latest
-    container_name: backend-fiap-postgres
-    environment:
-      POSTGRES_DB: backendfiap
-      POSTGRES_USER: user
-      POSTGRES_PASSWORD: secret
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
-    ports:
-      - "5432:5432"
-
   backend:
     build: .
     container_name: backend-fiap-app
     environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/backendfiap
+      SPRING_DATASOURCE_URL: jdbc:postgresql://52.167.177.141:5432/backendfiap
       SPRING_DATASOURCE_USERNAME: user
       SPRING_DATASOURCE_PASSWORD: secret
       SPRING_JPA_HIBERNATE_DDL_AUTO: update
@@ -26,8 +14,6 @@ services:
       FIREBASE_CONFIG_PATH: /app/resources/fiapbackend-firebase-adminsdk-563fl-32ee904e6e.json
     ports:
       - "8080:8080"
-    depends_on:
-      - postgres
 
 volumes:
   postgres_data:
