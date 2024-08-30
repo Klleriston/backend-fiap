@@ -10,7 +10,7 @@ services:
       SPRING_JPA_HIBERNATE_DDL_AUTO: update
       SPRING_JPA_SHOW_SQL: "true"
       SPRING_JPA_PROPERTIES_HIBERNATE_DIALECT: org.hibernate.dialect.PostgreSQLDialect
-      OPENWEATHER_API_KEY: 2e5f8e562a18f9ea7bd09eae6f340b9a
+      OPENWEATHER_API_KEY: 2e5f8e562a
       FIREBASE_CONFIG_PATH: /app/resources/fiapbackend-firebase-adminsdk-563fl-32ee904e6e.json
     ports:
       - "8080:8080"
